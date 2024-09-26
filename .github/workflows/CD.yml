@@ -5,10 +5,7 @@ on:
   push:
     branches:
       - main  # main 브랜치에 push될 때
-  pull_request:
-    types: [closed]  # PR이 closed(merge)되었을 때만
-    branches:
-      - main  # main 브랜치로 PR이 병합될 때만
+      - develop
 
 permissions: write-all # 테스트 결과 작성을 위해 쓰기권한 추가
 
@@ -39,7 +36,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            mkdir -p /home/ubuntu/server_test
+            mkdir -p /home/ubuntu/nuclear_server
 
       - name: List build directory
         run: ls -la build/libs
@@ -64,16 +61,8 @@ jobs:
             src/main/resources/application.properties
           target: "/home/ubuntu/server_test"
 
-      - name: Transfer Dockerfile && app.conf && docker-compose using SCP
-        uses: appleboy/scp-action@master  # .jar 파일 원격 서버로 복사
-        with:
-          username: ubuntu
-          host: ${{ secrets.SSH_HOST }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "Dockerfile,app.conf,docker-compose.yml,.env"
-          target: "/home/ubuntu/server_test"
-
-      - name: Deploy using Docker Compose via SSH
+      - name: Deploy using Docker Compose via SSH(Prod)
+        if: github.ref == 'refs/heads/main'
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -81,8 +70,16 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script_stop: true
           script: |
-            cd /home/ubuntu/server_test || exit 1  # 경로 변경 실패 시 종료
-              sudo docker compose up --build -d
-#            sudo docker compose down || true  # 기존 컨테이너 중단
-#            sudo docker compose pull
-#            sudo docker-compose up -d|| exit 1  # 새로운 컨테이너 실행
+            cd /home/ubuntu/nuclear_server || exit 1  # 경로 변경 실패 시 종료
+              sudo docker compose --profile prod --env-file .env.prod up --build -d
+      - name: Deploy using Docker Compose via SSH(Dev)
+        if: github.ref == 'refs/heads/develop'
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          script_stop: true
+          script: |
+            cd /home/ubuntu/nuclear_server || exit 1  # 경로 변경 실패 시 종료
+              sudo docker compose --profile dev --env-file .env.dev up --build -d
