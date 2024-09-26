@@ -1,6 +1,5 @@
 name: CD with Gradle
 
-# main 브랜치로 pull request가 merge되거나, main 브랜치에 직접 push가 있을 때 trigger 발생
 on:
   push:
     branches:
