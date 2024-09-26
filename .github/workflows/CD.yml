@@ -48,7 +48,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           key: ${{ secrets.SSH_KEY }}
           source: |
-            build/libs/nuclear_backend-0.0.1-SNAPSHOT.jar
+            build/libs/back_end-0.0.1-SNAPSHOT.jar
           target: "/home/ubuntu/server_test"
 
       - name: Transfer Application.properties using SCP
