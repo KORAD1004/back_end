@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main  # main 브랜치에 push될 때
-      - develop
+      - develop  # develop 브랜치에 push될 때
 
 permissions: write-all # 테스트 결과 작성을 위해 쓰기권한 추가
 
