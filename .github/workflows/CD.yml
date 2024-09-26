@@ -51,16 +51,6 @@ jobs:
             build/libs/back_end-0.0.1-SNAPSHOT.jar
           target: "/home/ubuntu/nuclear_server"
 
-      - name: Transfer Application.properties using SCP
-        uses: appleboy/scp-action@master  # .jar 파일 원격 서버로 복사
-        with:
-          username: ubuntu
-          host: ${{ secrets.SSH_HOST }}
-          key: ${{ secrets.SSH_KEY }}
-          source: |
-            src/main/resources/application.properties
-          target: "/home/ubuntu/nuclear_server"
-
       - name: Deploy using Docker Compose via SSH(Prod)
         if: github.ref == 'refs/heads/main'
         uses: appleboy/ssh-action@master
