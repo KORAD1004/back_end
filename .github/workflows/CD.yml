@@ -1,0 +1,88 @@
+name: CD with Gradle
+
+# main 브랜치로 pull request가 merge되거나, main 브랜치에 직접 push가 있을 때 trigger 발생
+on:
+  push:
+    branches:
+      - main  # main 브랜치에 push될 때
+  pull_request:
+    types: [closed]  # PR이 closed(merge)되었을 때만
+    branches:
+      - main  # main 브랜치로 PR이 병합될 때만
+
+permissions: write-all # 테스트 결과 작성을 위해 쓰기권한 추가
+
+jobs:
+  build:
+    if: github.event.pull_request.merged == true || github.event_name == 'push'  # PR merge 또는 push일 때 실행
+    runs-on: ubuntu-latest  # 환경
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3  # 코드 체크아웃 = 가상환경 복사
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3 #jdk 컴파일러
+        with:
+          java-version: '17'
+          distribution: 'temurin'  # 자바 개발 키트 배포판
+
+      - name: Grant execute permission for Gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build -x test  #빌드
+
+      - name: Ensure target directory exists
+        uses: appleboy/ssh-action@master  # SSH를 통해 대상 디렉토리 생성
+        with:
+          username: ubuntu
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            mkdir -p /home/ubuntu/server_test
+
+      - name: List build directory
+        run: ls -la build/libs
+
+      - name: Transfer Build File using SCP
+        uses: appleboy/scp-action@master  # .jar 파일 원격 서버로 복사
+        with:
+          username: ubuntu
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          source: |
+            build/libs/nuclear_backend-0.0.1-SNAPSHOT.jar
+          target: "/home/ubuntu/server_test"
+
+      - name: Transfer Application.properties using SCP
+        uses: appleboy/scp-action@master  # .jar 파일 원격 서버로 복사
+        with:
+          username: ubuntu
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          source: |
+            src/main/resources/application.properties
+          target: "/home/ubuntu/server_test"
+
+      - name: Transfer Dockerfile && app.conf && docker-compose using SCP
+        uses: appleboy/scp-action@master  # .jar 파일 원격 서버로 복사
+        with:
+          username: ubuntu
+          host: ${{ secrets.SSH_HOST }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "Dockerfile,app.conf,docker-compose.yml,.env"
+          target: "/home/ubuntu/server_test"
+
+      - name: Deploy using Docker Compose via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ubuntu
+          key: ${{ secrets.SSH_KEY }}
+          script_stop: true
+          script: |
+            cd /home/ubuntu/server_test || exit 1  # 경로 변경 실패 시 종료
+              sudo docker compose up --build -d
+#            sudo docker compose down || true  # 기존 컨테이너 중단
+#            sudo docker compose pull
+#            sudo docker-compose up -d|| exit 1  # 새로운 컨테이너 실행
