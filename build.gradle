@@ -41,36 +41,3 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
-spotless {
-    java {
-        // import 순서 정의
-        importOrder(
-                "java",
-                "javax",
-                "lombok",
-                "org.springframework",
-                "",
-                "\\#",
-                "org.junit",
-                "\\#org.junit",
-                "com.guide",
-                "\\#com.guide"
-        )
-        // 사용하지 않는 import 제거
-        removeUnusedImports()
-        // 구글 자바 포맷 적용
-        googleJavaFormat()
-
-        indentWithTabs(4)
-        indentWithSpaces(4)
-        // 공백 제거
-        trimTrailingWhitespace()
-        // 끝부분 New Line 처리
-        endWithNewline()
-    }
-}
-
-tasks.named('compileJava') {
-    dependsOn 'spotlessApply'
-}
