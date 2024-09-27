@@ -9,6 +9,7 @@ import com.korad1004.back_end.my_travel_spot.entity.Route;
 public class CreateRouteInfoDto {
 
     private Integer number;
+
     private String address;
     private String hours;
     private String spotUrl;
