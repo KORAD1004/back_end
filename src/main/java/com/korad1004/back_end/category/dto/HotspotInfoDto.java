@@ -1,8 +1,8 @@
-package com.korad1004.back_end.hotspot.dto;
+package com.korad1004.back_end.category.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import com.korad1004.back_end.hotspot.entity.Hotspot;
+import com.korad1004.back_end.category.entity.Hotspot;
 
 @Getter
 @Setter

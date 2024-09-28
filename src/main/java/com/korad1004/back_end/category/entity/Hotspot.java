@@ -1,4 +1,4 @@
-package com.korad1004.back_end.hotspot.entity;
+package com.korad1004.back_end.category.entity;
 
 
 import jakarta.persistence.Column;
@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-import com.korad1004.back_end.category.entity.Category;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;

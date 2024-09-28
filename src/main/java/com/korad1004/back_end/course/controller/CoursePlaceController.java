@@ -1,8 +1,8 @@
-package com.korad1004.back_end.course_place.controller;
+package com.korad1004.back_end.course.controller;
 
 import lombok.AllArgsConstructor;
-import com.korad1004.back_end.course_place.dto.CourseInfoDto;
-import com.korad1004.back_end.course_place.service.CoursePlaceService;
+import com.korad1004.back_end.course.dto.CourseInfoDto;
+import com.korad1004.back_end.course.service.CoursePlaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

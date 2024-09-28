@@ -1,11 +1,11 @@
-package com.korad1004.back_end.course_place.service;
+package com.korad1004.back_end.course.service;
 
 import lombok.AllArgsConstructor;
 import com.korad1004.back_end.course.entity.Course;
 import com.korad1004.back_end.course.repository.CourseRepository;
-import com.korad1004.back_end.course_place.dto.CourseInfoDto;
-import com.korad1004.back_end.course_place.entity.CoursePlace;
-import com.korad1004.back_end.course_place.repository.CoursePlaceRepository;
+import com.korad1004.back_end.course.dto.CourseInfoDto;
+import com.korad1004.back_end.course.entity.CoursePlace;
+import com.korad1004.back_end.course.repository.CoursePlaceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

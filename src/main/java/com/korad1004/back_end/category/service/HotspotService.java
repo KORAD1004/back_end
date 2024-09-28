@@ -1,13 +1,13 @@
-package com.korad1004.back_end.hotspot.service;
+package com.korad1004.back_end.category.service;
 
 
 import lombok.Getter;
 import lombok.Setter;
 import com.korad1004.back_end.category.entity.Category;
 import com.korad1004.back_end.category.repository.CategoryRepository;
-import com.korad1004.back_end.hotspot.dto.HotspotInfoDto;
-import com.korad1004.back_end.hotspot.entity.Hotspot;
-import com.korad1004.back_end.hotspot.repository.HotspotRepository;
+import com.korad1004.back_end.category.dto.HotspotInfoDto;
+import com.korad1004.back_end.category.entity.Hotspot;
+import com.korad1004.back_end.category.repository.HotspotRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

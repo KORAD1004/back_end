@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
-import com.korad1004.back_end.course_place.entity.CoursePlace;
 
 import java.util.List;
 
