@@ -9,11 +9,11 @@ import lombok.Setter;
 public class CourseInfoDto {
 
 
+    private Integer number;
+
     private String title;
 
-
     private String address;
-
 
     private String spotUrl;
 
@@ -21,6 +21,7 @@ public class CourseInfoDto {
 
         CourseInfoDto courseInfoDto=new CourseInfoDto();
 
+        courseInfoDto.setNumber(courseInfoDto.getNumber());
         courseInfoDto.setTitle(courseInfoDto.getTitle());
         courseInfoDto.setAddress(courseInfoDto.getAddress());
         courseInfoDto.setSpotUrl(courseInfoDto.getSpotUrl());

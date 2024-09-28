@@ -1,6 +1,7 @@
 package com.korad1004.back_end.category.entity;
 
 
+import com.korad1004.back_end.course.entity.CoursePlace;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,11 +9,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Setter
@@ -28,7 +31,7 @@ public class Hotspot {
     private String image;
 
     //장소 이름
-    @Column
+    @Column(name="hotspot_title")
     private String title;
 
     //장소 주소
@@ -56,5 +59,8 @@ public class Hotspot {
     @ManyToOne
     @JoinColumn(name="category_category_name")
     private Category category;
+
+    @OneToMany(mappedBy = "hotspot")
+    private List<CoursePlace> coursePlaceList;
 
 }

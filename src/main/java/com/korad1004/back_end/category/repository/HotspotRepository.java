@@ -12,5 +12,7 @@ import java.util.Optional;
 public interface HotspotRepository extends JpaRepository<Hotspot,Long> {
 
     Optional<List<Hotspot>> findAllByCategory(Category category);
+    Optional<Hotspot> findByTitle(String title);
+
 
 }
