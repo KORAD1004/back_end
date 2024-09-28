@@ -1,6 +1,5 @@
-package com.korad1004.back_end.course_place.entity;
+package com.korad1004.back_end.course.entity;
 
-import com.korad1004.back_end.course.entity.Course;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

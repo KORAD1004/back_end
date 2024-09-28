@@ -1,7 +1,7 @@
-package com.korad1004.back_end.hotspot.repository;
+package com.korad1004.back_end.category.repository;
 
 import com.korad1004.back_end.category.entity.Category;
-import com.korad1004.back_end.hotspot.entity.Hotspot;
+import com.korad1004.back_end.category.entity.Hotspot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

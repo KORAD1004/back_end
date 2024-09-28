@@ -1,8 +1,8 @@
-package com.korad1004.back_end.hotspot.controller;
+package com.korad1004.back_end.category.controller;
 
 
-import com.korad1004.back_end.hotspot.dto.HotspotInfoDto;
-import com.korad1004.back_end.hotspot.service.HotspotService;
+import com.korad1004.back_end.category.dto.HotspotInfoDto;
+import com.korad1004.back_end.category.service.HotspotService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
