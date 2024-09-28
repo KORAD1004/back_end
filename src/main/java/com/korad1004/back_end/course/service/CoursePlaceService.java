@@ -1,5 +1,7 @@
 package com.korad1004.back_end.course.service;
 
+import com.korad1004.back_end.category.entity.Hotspot;
+import com.korad1004.back_end.category.repository.HotspotRepository;
 import lombok.AllArgsConstructor;
 import com.korad1004.back_end.course.entity.Course;
 import com.korad1004.back_end.course.repository.CourseRepository;
@@ -20,50 +22,60 @@ public class CoursePlaceService {
 
     private final CourseRepository courseRepository; //코스이름 저장소
 
+    private final HotspotRepository hotspotRepository;
+
     //코스이름 선택하여 코스 짜주는 로직
-    public Boolean createPlaceOfCourse(Long id, CourseInfoDto courseInfoDto){
+    public void createPlaceOfCourse(Long id ,Integer number,String title){
 
         CoursePlace coursePlace =new CoursePlace();
 
         //외래키 참조한 course의 저장소에서 데이터 불러옴
         Optional<Course> optionalCourse = courseRepository.findById(id);
+        Optional<Hotspot> optionalHotspot=hotspotRepository.findByTitle(title);
 
-        if(optionalCourse.isPresent()){
+        if(optionalCourse.isPresent() && optionalHotspot.isPresent()){
 
             Course  course = optionalCourse.get();
+            Hotspot hotspot=optionalHotspot.get();
 
-            coursePlace.setTitle(courseInfoDto.getTitle());
-            coursePlace.setAddress(coursePlace.getAddress());
-            coursePlace.setSpotUrl(coursePlace.getSpotUrl());
+
             coursePlace.setCourse(course);
+            coursePlace.setNumber(number);
+            coursePlace.setHotspot(hotspot);
 
             coursePlaceRepository.save(coursePlace);
-
-            return true;
         }
-        return false;
 
     }
 
     //코스 선택시 해당 코스에 대한 정보를 넘겨주는 Logic
     public List<CourseInfoDto> getCoursePlace(Long id){
 
-        CourseInfoDto courseInfoDto;
+        CourseInfoDto courseInfoDto=new CourseInfoDto();
         List<CourseInfoDto> courseInfoDtoList =new ArrayList<>();
         Optional<Course> optionalCourse=courseRepository.findById(id); //코스 이름
 
         if(optionalCourse.isPresent()) {
-            List<CoursePlace> coursePlaces=coursePlaceRepository.findByCourse(optionalCourse.get());
 
-            for(CoursePlace coursePlace:coursePlaces){
-                courseInfoDto = CourseInfoDto.from(coursePlace); //코스가 나와야함
-                courseInfoDtoList.add(courseInfoDto);
+            List<CoursePlace> coursePlaceList = coursePlaceRepository.findByCourse(optionalCourse.get());
+
+            for(CoursePlace coursePlace:coursePlaceList) {
+
+                Optional<Hotspot> optionalHotspot= hotspotRepository.findByTitle(coursePlace.getHotspot().getTitle());
+
+                if(optionalHotspot.isPresent()) {
+                    Hotspot hotspot=optionalHotspot.get();
+
+                    courseInfoDto.setNumber(coursePlace.getNumber());
+                    courseInfoDto.setTitle(hotspot.getTitle());
+                    courseInfoDto.setAddress(hotspot.getAddress());
+                    courseInfoDto.setSpotUrl(hotspot.getSpotUrl());
+
+                    courseInfoDtoList.add(courseInfoDto);
+                }
             }
             return courseInfoDtoList;
         }
-
         return null;
-
     }
-
 }

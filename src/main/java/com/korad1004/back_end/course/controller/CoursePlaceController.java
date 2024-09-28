@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,14 +20,14 @@ public class CoursePlaceController {
 
     private final CoursePlaceService coursePlaceService;
 
-    //코스이름 선택하여 코스 짜주는 api
-    @PostMapping("{course_id}")
-    public ResponseEntity<Void> createCourse(@PathVariable(name="course_id") Long id, @RequestBody CourseInfoDto courseInfoDto){
+    //코스이름 선택 & 동선 순서 & 가볼만한 곳에 등록 되어있는 장소 이름 post 요청시 해당 코스 항목에 들어감
+    @PostMapping("{course_id}/{number}/{hotspot_id}")
+    public ResponseEntity<?> createCourse(@PathVariable(name="course_id") Long id, @PathVariable(name="number") Integer number,@PathVariable(name="hotspot_id") String title){
 
-        if(coursePlaceService.createPlaceOfCourse(id, courseInfoDto))
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+        coursePlaceService.createPlaceOfCourse(id,number,title);
 
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+
     }
 
     //원하는 코스를 선택시 해당 코스에 대한 경로 정보 api

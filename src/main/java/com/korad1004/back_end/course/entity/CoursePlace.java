@@ -1,5 +1,6 @@
 package com.korad1004.back_end.course.entity;
 
+import com.korad1004.back_end.category.entity.Hotspot;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,19 +21,14 @@ public class CoursePlace {
     @Column(name="courseplace_id")
     private Long id;
 
-    @Column(name="courseplace_image")
-    private String image;
-
-    @Column(name="courseplace_title")
-    private String title;     //장소 이름
-
-    @Column(name="courseplace_address")
-    private String address;   //장소 주소
-
-    @Column(name="courseplace_spoturl")
-    private String spotUrl;   //장소 홈페이지 주소
+    @Column(name="courseplace_number")
+    private Integer number;
 
     @ManyToOne
     @JoinColumn(name = "course_course_name")
     private Course course;
+
+    @ManyToOne
+    @JoinColumn(name="hotspot_hotspot_title")
+    private Hotspot hotspot;
 }
