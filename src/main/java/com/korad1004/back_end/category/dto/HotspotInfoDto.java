@@ -11,21 +11,21 @@ public class HotspotInfoDto {
 
     private String title;
 
-    private String address;
+    private String image;
 
-    private String hours;
+    private String address;
 
     private String phone_num;
 
-    private String spotUrl;
+    private String subTitle;
 
     public static HotspotInfoDto from(Hotspot hotspot){
         HotspotInfoDto hotspotInfoDto = new HotspotInfoDto();
         hotspotInfoDto.setTitle(hotspot.getTitle());
         hotspotInfoDto.setAddress(hotspot.getAddress());
-        hotspotInfoDto.setHours(hotspot.getHours());
-        hotspotInfoDto.setPhone_num(hotspotInfoDto.getPhone_num());
-        hotspotInfoDto.setSpotUrl(hotspotInfoDto.getSpotUrl());
+        hotspotInfoDto.setImage(hotspot.getImage());
+        hotspotInfoDto.setPhone_num(hotspot.getPhone_num());
+        hotspotInfoDto.setSubTitle(hotspot.getSubTitle());
 
         return hotspotInfoDto;
     }

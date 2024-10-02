@@ -1,15 +1,17 @@
 package com.korad1004.back_end.category.service;
 
 
+import com.opencsv.CSVReader;
 import lombok.Getter;
 import lombok.Setter;
-import com.korad1004.back_end.category.entity.Category;
-import com.korad1004.back_end.category.repository.CategoryRepository;
 import com.korad1004.back_end.category.dto.HotspotInfoDto;
+import com.korad1004.back_end.category.entity.Category;
 import com.korad1004.back_end.category.entity.Hotspot;
+import com.korad1004.back_end.category.repository.CategoryRepository;
 import com.korad1004.back_end.category.repository.HotspotRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,16 +40,36 @@ public class HotspotService {
 
         hotspot.setAddress(hotspotInfoDto.getAddress());
 
-        hotspot.setHours(hotspotInfoDto.getHours());
-
         hotspot.setPhone_num(hotspotInfoDto.getPhone_num());
 
-        hotspot.setSpotUrl(hotspotInfoDto.getSpotUrl());
+        hotspot.setSubTitle(hotspotInfoDto.getSubTitle());
 
-        if(categoryName.isPresent()){
-            hotspot.setCategory(categoryName.get());
-        }
+        categoryName.ifPresent(hotspot::setCategory);
         hotspotRepository.save(hotspot);
+    }
+
+    public void createHotspots(){
+
+
+        try(CSVReader reader = new CSVReader(new FileReader("data.csv"))){
+            reader.readNext();
+            String[] arr;
+            while((arr=reader.readNext())!=null){
+                Hotspot hotspot = new Hotspot();
+                Optional<Category> optionalCategory=categoryRepository.findByCategoryName(arr[0]);
+
+                    hotspot.setTitle(arr[1]);
+                    hotspot.setImage(arr[2]);
+                    hotspot.setAddress(arr[3]);
+                    hotspot.setPhone_num(arr[4]);
+                    hotspot.setSubTitle(arr[7]);
+                    optionalCategory.ifPresent(hotspot::setCategory);
+                    hotspotRepository.save(hotspot);
+            }
+        }
+        catch (Exception e){
+            e.fillInStackTrace();
+        }
     }
 
     public List<HotspotInfoDto> getHotspotList(String category){
