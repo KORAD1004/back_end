@@ -37,8 +37,6 @@ public class CoursePlaceService {
 
             Course  course = optionalCourse.get();
             Hotspot hotspot=optionalHotspot.get();
-
-
             coursePlace.setCourse(course);
             coursePlace.setNumber(number);
             coursePlace.setHotspot(hotspot);
@@ -71,7 +69,6 @@ public class CoursePlaceService {
                     courseInfoDto.setAddress(hotspot.getAddress());
                     courseInfoDto.setImage(hotspot.getImage());
                     courseInfoDto.setPhone_num(hotspot.getPhone_num());
-
                     courseInfoDtoList.add(courseInfoDto);
                 }
             }
