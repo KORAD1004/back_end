@@ -9,8 +9,6 @@ import com.korad1004.back_end.category.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Setter
 @Getter
 @Service
