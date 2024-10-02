@@ -69,7 +69,8 @@ public class CoursePlaceService {
                     courseInfoDto.setNumber(coursePlace.getNumber());
                     courseInfoDto.setTitle(hotspot.getTitle());
                     courseInfoDto.setAddress(hotspot.getAddress());
-                    courseInfoDto.setSpotUrl(hotspot.getSpotUrl());
+                    courseInfoDto.setImage(hotspot.getImage());
+                    courseInfoDto.setPhone_num(hotspot.getPhone_num());
 
                     courseInfoDtoList.add(courseInfoDto);
                 }

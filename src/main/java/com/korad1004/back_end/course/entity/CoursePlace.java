@@ -24,6 +24,18 @@ public class CoursePlace {
     @Column(name="courseplace_number")
     private Integer number;
 
+    @Column
+    private String image;
+
+    @Column
+    private String title;
+
+    @Column
+    private String address;
+
+    @Column
+    private String phone_num;
+
     @ManyToOne
     @JoinColumn(name = "course_course_name")
     private Course course;
