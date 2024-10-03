@@ -40,7 +40,7 @@ public class CoursePlace {
     private String longitude;
 
     @ManyToOne
-    @JoinColumn(name = "course_course_name")
+    @JoinColumn(name = "course_course_id")
     private Course course;
 
     @ManyToOne
