@@ -34,7 +34,10 @@ public class CoursePlace {
     private String address;
 
     @Column
-    private String phone_num;
+    private String latitude;
+
+    @Column
+    private String longitude;
 
     @ManyToOne
     @JoinColumn(name = "course_course_name")
