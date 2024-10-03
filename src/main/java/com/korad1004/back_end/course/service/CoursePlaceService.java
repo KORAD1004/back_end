@@ -46,7 +46,7 @@ public class CoursePlaceService {
 
     }
 
-    //코스 선택시 해당 코스에 대한 정보를 넘겨주는 Logic
+    //코스 선택시 해당 코스에 대한 정보를 넘겨주는 엔드포인트
     public List<CourseInfoDto> getCoursePlace(Long id){
 
         CourseInfoDto courseInfoDto=new CourseInfoDto();
@@ -68,7 +68,8 @@ public class CoursePlaceService {
                     courseInfoDto.setTitle(hotspot.getTitle());
                     courseInfoDto.setAddress(hotspot.getAddress());
                     courseInfoDto.setImage(hotspot.getImage());
-                    courseInfoDto.setPhone_num(hotspot.getPhone_num());
+                    courseInfoDto.setLatitude(hotspot.getLatitude());
+                    courseInfoDto.setLongitude(hotspot.getLongitude());
                     courseInfoDtoList.add(courseInfoDto);
                 }
             }

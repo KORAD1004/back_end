@@ -36,6 +36,14 @@ public class Hotspot {
     @Column
     private String phone_num;
 
+    //위도
+    @Column
+    private String latitude;
+
+    //경도
+    @Column
+    private String longitude;
+
     //장소 URL (도메인 주소)
     @Column
     private String subTitle;

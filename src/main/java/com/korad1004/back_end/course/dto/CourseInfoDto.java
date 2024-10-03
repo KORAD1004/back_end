@@ -17,7 +17,10 @@ public class CourseInfoDto {
 
     private String address;
 
-    private String phone_num;
+    private String latitude;
+
+    private String longitude;
+
 
     public static CourseInfoDto from(CoursePlace coursePlace){
 
@@ -27,7 +30,8 @@ public class CourseInfoDto {
         courseInfoDto.setImage(courseInfoDto.getImage());
         courseInfoDto.setTitle(courseInfoDto.getTitle());
         courseInfoDto.setAddress(courseInfoDto.getAddress());
-        courseInfoDto.setPhone_num(courseInfoDto.getPhone_num());
+        courseInfoDto.setLatitude(courseInfoDto.getLatitude());
+        courseInfoDto.setLongitude(courseInfoDto.getLongitude());
 
         return courseInfoDto;
 
