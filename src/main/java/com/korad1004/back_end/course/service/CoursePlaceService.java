@@ -25,13 +25,13 @@ public class CoursePlaceService {
     private final HotspotRepository hotspotRepository;
 
     //코스이름 선택하여 코스 짜주는 로직
-    public void createPlaceOfCourse(Long id ,Integer number,String title){
+    public void createPlaceOfCourse(Long id ,Integer number,Long hotspot_id){
 
         CoursePlace coursePlace =new CoursePlace();
 
         //외래키 참조한 course의 저장소에서 데이터 불러옴
         Optional<Course> optionalCourse = courseRepository.findById(id);
-        Optional<Hotspot> optionalHotspot=hotspotRepository.findByTitle(title);
+        Optional<Hotspot> optionalHotspot=hotspotRepository.findById(hotspot_id);
 
         if(optionalCourse.isPresent() && optionalHotspot.isPresent()){
 
@@ -59,7 +59,7 @@ public class CoursePlaceService {
 
             for(CoursePlace coursePlace:coursePlaceList) {
 
-                Optional<Hotspot> optionalHotspot= hotspotRepository.findByTitle(coursePlace.getHotspot().getTitle());
+                Optional<Hotspot> optionalHotspot= hotspotRepository.findById(coursePlace.getHotspot().getId());
 
                 if(optionalHotspot.isPresent()) {
                     Hotspot hotspot=optionalHotspot.get();

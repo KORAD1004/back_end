@@ -44,6 +44,6 @@ public class CoursePlace {
     private Course course;
 
     @ManyToOne
-    @JoinColumn(name="hotspot_hotspot_title")
+    @JoinColumn(name="hotspot_hotspot_id")
     private Hotspot hotspot;
 }

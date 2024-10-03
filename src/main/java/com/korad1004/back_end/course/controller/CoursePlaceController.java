@@ -22,10 +22,10 @@ public class CoursePlaceController {
 
     //코스이름 선택 & 동선 순서 & 가볼만한 곳에 등록 되어있는 장소 이름 post 요청시 해당 코스 항목에 들어감
     //입력 항목 : 코스 아이디, 동선 순서, 장소 이름
-    @PostMapping("{course_id}/{number}/{hotspot_title}")
-    public ResponseEntity<?> createCourse(@PathVariable(name="course_id") Long id, @PathVariable(name="number") Integer number,@PathVariable(name="hotspot_title") String title){
+    @PostMapping("{course_id}/{number}/{hotspot_id}")
+    public ResponseEntity<?> createCourse(@PathVariable(name="course_id") Long id, @PathVariable(name="number") Integer number,@PathVariable(name="hotspot_id") Long hotspot_id){
 
-        coursePlaceService.createPlaceOfCourse(id,number,title);
+        coursePlaceService.createPlaceOfCourse(id,number,hotspot_id);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
 
