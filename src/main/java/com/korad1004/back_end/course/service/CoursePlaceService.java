@@ -49,16 +49,18 @@ public class CoursePlaceService {
     //코스 선택시 해당 코스에 대한 정보를 넘겨주는 엔드포인트
     public List<CourseInfoDto> getCoursePlace(Long id){
 
-        CourseInfoDto courseInfoDto=new CourseInfoDto();
         List<CourseInfoDto> courseInfoDtoList =new ArrayList<>();
         Optional<Course> optionalCourse=courseRepository.findById(id); //코스 이름
 
+        //해당 코스가 존재시
         if(optionalCourse.isPresent()) {
 
+            //
             List<CoursePlace> coursePlaceList = coursePlaceRepository.findByCourse(optionalCourse.get());
 
             for(CoursePlace coursePlace:coursePlaceList) {
 
+                CourseInfoDto courseInfoDto=new CourseInfoDto();
                 Optional<Hotspot> optionalHotspot= hotspotRepository.findById(coursePlace.getHotspot().getId());
 
                 if(optionalHotspot.isPresent()) {
