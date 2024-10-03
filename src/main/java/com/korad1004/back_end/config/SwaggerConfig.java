@@ -11,7 +11,7 @@ import org.springdoc.core.models.GroupedOpenApi;
 
 @OpenAPIDefinition(
         info = @Info(title = "Nuclear", description = "원자력발전소 공모전", version = "v1"),
-        servers = @Server(url = "http://158.180.79.218:8081", description = "서버 URL")
+        servers = @Server(url = "http://dev.smartcheers.site", description = "서버 URL")
 
 )
 @RequiredArgsConstructor
