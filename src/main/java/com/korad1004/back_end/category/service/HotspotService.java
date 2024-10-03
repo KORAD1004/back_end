@@ -51,7 +51,7 @@ public class HotspotService {
     public void createHotspots(){
 
 
-        try(CSVReader reader = new CSVReader(new FileReader("data.csv"))){
+        try(CSVReader reader = new CSVReader(new FileReader("/home/ubuntu/nuclear_server/data.csv"))){
             reader.readNext();
             String[] arr;
             while((arr=reader.readNext())!=null){
