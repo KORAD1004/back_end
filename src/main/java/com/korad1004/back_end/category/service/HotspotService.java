@@ -53,7 +53,7 @@ public class HotspotService {
     //csv 데이터 넣기 (가볼만한 곳)
     public void createHotspots(){
 
-        try(CSVReader reader = new CSVReader(new FileReader("/Users/eddy/Desktop/data.csv"))){
+        try(CSVReader reader = new CSVReader(new FileReader("/home/ubuntu/nuclear_server/data.csv"))){
             reader.readNext();
             String[] arr;
             while((arr=reader.readNext())!=null){
