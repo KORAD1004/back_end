@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,12 +21,37 @@ public class RadiationScrapController {
     private final ScrapService scrapService;
 
     @Value("${lambda.api.radiation.average}")
-    private String apiUrl;
+    private String apiUrlAverage;
+
+    @Value("${lambda.api.radiation.recent.average}")
+    private String apiUrlRecentAverage;
 
     @GetMapping("/average")
     public ResponseEntity<?> getRadiationAverage() {
 
-        String url = apiUrl;
+        String url = apiUrlAverage;
+
+        return scrapService.getScrapResponse(url, NationWideRadiationAverageDto.class);
+    }
+
+    @GetMapping("/recent/{type}")
+    public ResponseEntity<?> getRecentRadiationAverage(@PathVariable String type) {
+
+        String url = apiUrlRecentAverage;
+
+        if (type == null) {
+            type = "avg";
+        }
+
+        if (type.equals("avg")) {
+            url = url + "?type=avg";
+        }
+        else if (type.equals("all")) {
+            url = url + "?type=all";
+        }
+        else {
+            return ResponseEntity.badRequest().body("잘못된 요청입니다. {type}");
+        }
 
         return scrapService.getScrapResponse(url, NationWideRadiationAverageDto.class);
     }
