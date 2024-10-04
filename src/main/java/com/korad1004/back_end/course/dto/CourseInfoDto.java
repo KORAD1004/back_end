@@ -11,20 +11,27 @@ public class CourseInfoDto {
 
     private Integer number;
 
+    private String image;
+
     private String title;
 
     private String address;
 
-    private String spotUrl;
+    private String latitude;
+
+    private String longitude;
+
 
     public static CourseInfoDto from(CoursePlace coursePlace){
 
         CourseInfoDto courseInfoDto=new CourseInfoDto();
 
         courseInfoDto.setNumber(courseInfoDto.getNumber());
+        courseInfoDto.setImage(courseInfoDto.getImage());
         courseInfoDto.setTitle(courseInfoDto.getTitle());
         courseInfoDto.setAddress(courseInfoDto.getAddress());
-        courseInfoDto.setSpotUrl(courseInfoDto.getSpotUrl());
+        courseInfoDto.setLatitude(courseInfoDto.getLatitude());
+        courseInfoDto.setLongitude(courseInfoDto.getLongitude());
 
         return courseInfoDto;
 

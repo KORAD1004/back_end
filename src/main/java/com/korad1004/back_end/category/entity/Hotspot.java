@@ -12,9 +12,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -26,34 +24,33 @@ public class Hotspot {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //장소 이미지
-    @Column(name="hotspot_image")
-    private String image;
-
     //장소 이름
-    @Column(name="hotspot_title")
+    @Column
     private String title;
+
+    //장소 이미지
+    @Column
+    private String image;
 
     //장소 주소
     @Column
     private String address;
 
-    //장소 영업시간
-    @Column
-    private String hours;
-
     //장소 전화번호
     @Column
     private String phone_num;
 
+    //위도
+    @Column
+    private String latitude;
+
+    //경도
+    @Column
+    private String longitude;
+
     //장소 URL (도메인 주소)
     @Column
-    private String spotUrl;
-
-    //데이터 삽입 시간
-    @CreationTimestamp
-    @Column
-    private LocalDateTime localDateTime;
+    private String subTitle;
 
     //카테고리 별 장소 지정
     @ManyToOne
@@ -62,5 +59,4 @@ public class Hotspot {
 
     @OneToMany(mappedBy = "hotspot")
     private List<CoursePlace> coursePlaceList;
-
 }

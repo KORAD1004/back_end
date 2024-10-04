@@ -25,20 +25,18 @@ public class CoursePlaceService {
     private final HotspotRepository hotspotRepository;
 
     //코스이름 선택하여 코스 짜주는 로직
-    public void createPlaceOfCourse(Long id ,Integer number,String title){
+    public void createPlaceOfCourse(Long id ,Integer number,Long hotspot_id){
 
         CoursePlace coursePlace =new CoursePlace();
 
         //외래키 참조한 course의 저장소에서 데이터 불러옴
         Optional<Course> optionalCourse = courseRepository.findById(id);
-        Optional<Hotspot> optionalHotspot=hotspotRepository.findByTitle(title);
+        Optional<Hotspot> optionalHotspot=hotspotRepository.findById(hotspot_id);
 
         if(optionalCourse.isPresent() && optionalHotspot.isPresent()){
 
             Course  course = optionalCourse.get();
             Hotspot hotspot=optionalHotspot.get();
-
-
             coursePlace.setCourse(course);
             coursePlace.setNumber(number);
             coursePlace.setHotspot(hotspot);
@@ -48,20 +46,22 @@ public class CoursePlaceService {
 
     }
 
-    //코스 선택시 해당 코스에 대한 정보를 넘겨주는 Logic
+    //코스 선택시 해당 코스에 대한 정보를 넘겨주는 엔드포인트
     public List<CourseInfoDto> getCoursePlace(Long id){
 
-        CourseInfoDto courseInfoDto=new CourseInfoDto();
         List<CourseInfoDto> courseInfoDtoList =new ArrayList<>();
         Optional<Course> optionalCourse=courseRepository.findById(id); //코스 이름
 
+        //해당 코스가 존재시
         if(optionalCourse.isPresent()) {
 
+            //
             List<CoursePlace> coursePlaceList = coursePlaceRepository.findByCourse(optionalCourse.get());
 
             for(CoursePlace coursePlace:coursePlaceList) {
 
-                Optional<Hotspot> optionalHotspot= hotspotRepository.findByTitle(coursePlace.getHotspot().getTitle());
+                CourseInfoDto courseInfoDto=new CourseInfoDto();
+                Optional<Hotspot> optionalHotspot= hotspotRepository.findById(coursePlace.getHotspot().getId());
 
                 if(optionalHotspot.isPresent()) {
                     Hotspot hotspot=optionalHotspot.get();
@@ -69,8 +69,9 @@ public class CoursePlaceService {
                     courseInfoDto.setNumber(coursePlace.getNumber());
                     courseInfoDto.setTitle(hotspot.getTitle());
                     courseInfoDto.setAddress(hotspot.getAddress());
-                    courseInfoDto.setSpotUrl(hotspot.getSpotUrl());
-
+                    courseInfoDto.setImage(hotspot.getImage());
+                    courseInfoDto.setLatitude(hotspot.getLatitude());
+                    courseInfoDto.setLongitude(hotspot.getLongitude());
                     courseInfoDtoList.add(courseInfoDto);
                 }
             }
