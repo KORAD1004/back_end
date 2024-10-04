@@ -1,6 +1,7 @@
 package com.korad1004.back_end.category.service;
 
 
+import com.korad1004.back_end.category.dto.GetAllHotspotInfo;
 import com.opencsv.CSVReader;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class HotspotService {
         this.categoryRepository = categoryRepository;
     }
 
+    //가볼 만한 곳 넣기
     public void createHotspotInfo(HotspotInfoDto hotspotInfoDto,String category){
 
         Hotspot hotspot=new Hotspot();
@@ -48,10 +50,10 @@ public class HotspotService {
         hotspotRepository.save(hotspot);
     }
 
+    //csv 데이터 넣기 (가볼만한 곳)
     public void createHotspots(){
 
-
-        try(CSVReader reader = new CSVReader(new FileReader("/home/ubuntu/nuclear_server/data.csv"))){
+        try(CSVReader reader = new CSVReader(new FileReader("/Users/eddy/Desktop/data.csv"))){
             reader.readNext();
             String[] arr;
             while((arr=reader.readNext())!=null){
@@ -74,6 +76,7 @@ public class HotspotService {
         }
     }
 
+    //원하는 카테고리에 대한 정보 리스트업
     public List<HotspotInfoDto> getHotspotList(String category){
 
         List<HotspotInfoDto> hotspotInfoDtoList =new ArrayList<>();
@@ -104,8 +107,28 @@ public class HotspotService {
 
         }
 
-
         return null;
+    }
+
+    //모든 장소 리스트업
+    public List<GetAllHotspotInfo> getAllHotspot(){
+
+        List<Hotspot> hotspotList =hotspotRepository.findAll();
+        List<GetAllHotspotInfo> getAllHotspotInfoList = new ArrayList<>();
+
+        for(Hotspot hotspot:hotspotList){
+            GetAllHotspotInfo getAllHotspotInfo = new GetAllHotspotInfo();
+
+            getAllHotspotInfo.setId(hotspot.getId());
+            getAllHotspotInfo.setTitle(hotspot.getTitle());
+            getAllHotspotInfo.setAddress(hotspot.getAddress());
+
+            getAllHotspotInfoList.add(getAllHotspotInfo);
+        }
+
+        return getAllHotspotInfoList;
+
+
     }
 
 }
