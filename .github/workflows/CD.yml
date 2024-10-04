@@ -22,6 +22,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'  # 자바 개발 키트 배포판
 
+      - name: Gradle Caching
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Grant execute permission for Gradlew
         run: chmod +x gradlew
 
