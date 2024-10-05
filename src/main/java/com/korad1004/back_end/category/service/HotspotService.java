@@ -128,7 +128,18 @@ public class HotspotService {
 
         return getAllHotspotInfoList;
 
+    }
 
+    //나의 일정 짜기 검색시 해당 hotspot get
+    public List<GetAllHotspotInfo> getAllSpotOfString(String string){
+        GetAllHotspotInfo getAllHotspotInfo;
+        List<GetAllHotspotInfo> getAllHotspotInfoList = new ArrayList<>();
+        List<Hotspot> hotspotList= hotspotRepository.findByTitle(string);
+        for(Hotspot hotspot:hotspotList){
+            getAllHotspotInfo = GetAllHotspotInfo.from(hotspot);
+            getAllHotspotInfoList.add(getAllHotspotInfo);
+        }
+        return getAllHotspotInfoList;
     }
 
 }
