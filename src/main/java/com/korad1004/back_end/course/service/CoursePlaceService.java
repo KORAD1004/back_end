@@ -72,6 +72,7 @@ public class CoursePlaceService {
                     courseInfoDto.setImage(hotspot.getImage());
                     courseInfoDto.setLatitude(hotspot.getLatitude());
                     courseInfoDto.setLongitude(hotspot.getLongitude());
+                    courseInfoDto.setCategory(hotspot.getCategory().getCategoryName());
                     courseInfoDtoList.add(courseInfoDto);
                 }
             }
