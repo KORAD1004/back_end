@@ -64,4 +64,10 @@ public class HotspotController {
         return ResponseEntity.created(URI.create("/all-place-insert")).build();
     }
 
+    @GetMapping("/search/{string}")
+    public ResponseEntity<List<GetAllHotspotInfo>> getAllSpotOfString(@PathVariable(name="string") String string){
+        return ResponseEntity.ok(hotspotService.getAllSpotOfString(string));
+    }
+
+
 }
