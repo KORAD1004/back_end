@@ -2,14 +2,7 @@ package com.korad1004.back_end.category.entity;
 
 
 import com.korad1004.back_end.course.entity.CoursePlace;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -57,6 +50,6 @@ public class Hotspot {
     @JoinColumn(name="category_category_name")
     private Category category;
 
-    @OneToMany(mappedBy = "hotspot")
+    @OneToMany(mappedBy = "hotspot",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<CoursePlace> coursePlaceList;
 }
