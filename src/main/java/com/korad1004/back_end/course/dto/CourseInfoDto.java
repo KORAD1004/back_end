@@ -21,6 +21,8 @@ public class CourseInfoDto {
 
     private String longitude;
 
+    private String category;
+
 
     public static CourseInfoDto from(CoursePlace coursePlace){
 
