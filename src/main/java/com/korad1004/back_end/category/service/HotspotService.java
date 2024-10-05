@@ -2,6 +2,7 @@ package com.korad1004.back_end.category.service;
 
 
 import com.korad1004.back_end.category.dto.GetAllHotspotInfo;
+import com.korad1004.back_end.category.dto.GetAllSpotOfString;
 import com.opencsv.CSVReader;
 import lombok.Getter;
 import lombok.Setter;
@@ -131,15 +132,15 @@ public class HotspotService {
     }
 
     //나의 일정 짜기 검색시 해당 hotspot get
-    public List<GetAllHotspotInfo> getAllSpotOfString(String string){
-        GetAllHotspotInfo getAllHotspotInfo;
-        List<GetAllHotspotInfo> getAllHotspotInfoList = new ArrayList<>();
+    public List<GetAllSpotOfString> getAllSpotOfString(String string){
+        GetAllSpotOfString getAllSpotOfString;
+        List<GetAllSpotOfString> getAllSpotOfStringList = new ArrayList<>();
         List<Hotspot> hotspotList= hotspotRepository.findByTitle(string);
         for(Hotspot hotspot:hotspotList){
-            getAllHotspotInfo = GetAllHotspotInfo.from(hotspot);
-            getAllHotspotInfoList.add(getAllHotspotInfo);
+            getAllSpotOfString = GetAllSpotOfString.from(hotspot);
+            getAllSpotOfStringList.add(getAllSpotOfString);
         }
-        return getAllHotspotInfoList;
+        return getAllSpotOfStringList;
     }
 
 }

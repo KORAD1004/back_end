@@ -2,6 +2,7 @@ package com.korad1004.back_end.category.controller;
 
 
 import com.korad1004.back_end.category.dto.GetAllHotspotInfo;
+import com.korad1004.back_end.category.dto.GetAllSpotOfString;
 import com.korad1004.back_end.category.dto.HotspotInfoDto;
 import com.korad1004.back_end.category.service.HotspotService;
 import org.springframework.http.HttpStatus;
@@ -65,7 +66,7 @@ public class HotspotController {
     }
 
     @GetMapping("/search/{string}")
-    public ResponseEntity<List<GetAllHotspotInfo>> getAllSpotOfString(@PathVariable(name="string") String string){
+    public ResponseEntity<List<GetAllSpotOfString>> getAllSpotOfString(@PathVariable(name="string") String string){
         return ResponseEntity.ok(hotspotService.getAllSpotOfString(string));
     }
 
