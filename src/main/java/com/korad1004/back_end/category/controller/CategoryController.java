@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.net.URI;
 
 @RestController
 @RequestMapping("api/category")
@@ -24,7 +25,7 @@ public class CategoryController {
 
         Category category=categoryService.createCategory(categoryNameDto);
 
-        return ResponseEntity.ok(category);
+        return ResponseEntity.created(URI.create("api/category")).build();
     }
 
 }
