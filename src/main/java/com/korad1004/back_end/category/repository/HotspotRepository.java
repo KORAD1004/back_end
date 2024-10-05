@@ -15,6 +15,6 @@ public interface HotspotRepository extends JpaRepository<Hotspot,Long> {
 
     Optional<List<Hotspot>> findAllByCategory(Category category);
 
-    @Query("SELECT h FROM Hotspot h WHERE h.title LIKE CONCAT('%', :string, '%')")
+    @Query("SELECT h FROM Hotspot h WHERE h.title LIKE CONCAT('%', :string, '%') ORDER BY CASE WHEN h.title LIKE CONCAT(:string, '%') THEN 0 ELSE 1 END, h.title ASC")
     List<Hotspot> findByTitle(@Param("string") String string);
 }
