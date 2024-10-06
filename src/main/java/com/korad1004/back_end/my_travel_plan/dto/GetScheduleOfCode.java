@@ -20,7 +20,7 @@ public class GetScheduleOfCode {
 
     private String endDate;
 
-    private Integer days;
+    private String days;
 
     //number,[hotspot_image,hotspot_title,hotspot_address,hotspot_latitude,hotspot_longitude],memo
 }

@@ -31,7 +31,7 @@ public class Schedule {
 
     //일차
     @Column(name = "travel_days")
-    private Integer days;
+    private String days;
 
     @OneToMany(mappedBy = "schedule",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<TourList> tourLists;

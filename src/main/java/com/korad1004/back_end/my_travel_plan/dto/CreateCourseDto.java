@@ -18,7 +18,7 @@ public class CreateCourseDto {
 
     private String endDate;
 
-    private Integer days;
+    private String days;
 
     //hotspot_id, number, memo
     private List<TourListDto> tourListDtoList;
