@@ -2,6 +2,8 @@ package com.korad1004.back_end.my_travel_plan.service;
 
 import com.korad1004.back_end.category.repository.HotspotRepository;
 import com.korad1004.back_end.my_travel_plan.dto.CreateCourseDto;
+import com.korad1004.back_end.my_travel_plan.dto.GetScheduleOfCode;
+import com.korad1004.back_end.my_travel_plan.dto.GetSpotInfoOfMyTravel;
 import com.korad1004.back_end.my_travel_plan.dto.TourListDto;
 import com.korad1004.back_end.my_travel_plan.entity.Schedule;
 import com.korad1004.back_end.my_travel_plan.entity.TourList;
@@ -13,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 
 @RestController
@@ -76,6 +82,44 @@ public class ScheduleService {
 
             tourListRepository.save(tourList);
         }
+    }
 
+    public List<Object> getScheduleOfCode(String code){
+
+        GetScheduleOfCode getScheduleOfCode = new GetScheduleOfCode();
+        Optional<Schedule> optionalSchedule= scheduleRepository.findByCode(code);
+        Schedule schedule;
+        List<GetSpotInfoOfMyTravel> getSpotInfoOfMyTravelList = new ArrayList<>();
+        List<Object> objectList = new ArrayList<>();
+        if(optionalSchedule.isPresent()){
+            schedule = optionalSchedule.get();
+            getScheduleOfCode.setCode(schedule.getCode());
+            getScheduleOfCode.setTravelName(schedule.getTravelName());
+            getScheduleOfCode.setHeadCount(schedule.getHeadCount());
+            getScheduleOfCode.setStartDate(schedule.getStartDate());
+            getScheduleOfCode.setEndDate(schedule.getEndDate());
+            getScheduleOfCode.setDays(schedule.getDays());
+
+            objectList.add(getScheduleOfCode);
+
+            for(TourList tourList:schedule.getTourLists()){
+
+                GetSpotInfoOfMyTravel getSpotInfoOfMyTravel = new GetSpotInfoOfMyTravel();
+
+                getSpotInfoOfMyTravel.setNumber(tourList.getNumber());
+                getSpotInfoOfMyTravel.setMemo(tourList.getMemo());
+                getSpotInfoOfMyTravel.setImage(tourList.getHotspot().getImage());
+                getSpotInfoOfMyTravel.setTitle(tourList.getHotspot().getTitle());
+                getSpotInfoOfMyTravel.setAddress(tourList.getHotspot().getAddress());
+                getSpotInfoOfMyTravel.setLatitude(tourList.getHotspot().getLatitude());
+                getSpotInfoOfMyTravel.setLongitude(tourList.getHotspot().getLongitude());
+
+                getSpotInfoOfMyTravelList.add(getSpotInfoOfMyTravel);
+            }
+
+            objectList.add(getSpotInfoOfMyTravelList);
+        }
+
+        return objectList;
     }
 }
