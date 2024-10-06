@@ -31,6 +31,4 @@ public class TourList {
     @JoinColumn(name = "schedule_code")
     private Schedule schedule;
 
-
-
 }
