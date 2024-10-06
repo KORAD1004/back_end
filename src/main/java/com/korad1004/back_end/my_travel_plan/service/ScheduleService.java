@@ -10,6 +10,9 @@ import com.korad1004.back_end.my_travel_plan.entity.TourList;
 import com.korad1004.back_end.my_travel_plan.repository.ScheduleRepository;
 import com.korad1004.back_end.my_travel_plan.repository.TourListRepository;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import javax.crypto.KeyGenerator;
@@ -20,9 +23,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-
-@RestController
-@RequestMapping("/api/schedule_test")
+@Service
+@Getter
+@Setter
 @AllArgsConstructor
 public class ScheduleService {
 
