@@ -23,14 +23,13 @@ public class ScheduleController {
 
     //스케줄 만들기
     @PostMapping
-    public ResponseEntity<Void> createSchedule(@RequestBody CreateCourseDto createCourseDto) throws Exception{
+    public ResponseEntity<String> createSchedule(@RequestBody CreateCourseDto createCourseDto) throws Exception{
         try{
-        scheduleService.createSchedule(createCourseDto);
+        return ResponseEntity.ok(scheduleService.createSchedule(createCourseDto));
         } catch (Exception e) {
             throw new RuntimeException("암호 화가 안 됐어요 you know?",e);
         }
 
-        return ResponseEntity.created(URI.create("/api/schedule")).build();
     }
 
     @GetMapping("/{travel_code}")

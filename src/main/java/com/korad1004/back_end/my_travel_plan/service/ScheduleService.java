@@ -36,7 +36,7 @@ public class ScheduleService {
 
 
     //스케줄 만들기
-    public void createSchedule(CreateCourseDto createCourseDto) throws Exception {
+    public String createSchedule(CreateCourseDto createCourseDto) throws Exception {
         Schedule schedule = new Schedule();
         StringBuilder numericEncryptedDateTime;
         while(true){
@@ -85,6 +85,9 @@ public class ScheduleService {
 
             tourListRepository.save(tourList);
         }
+
+        return numericEncryptedDateTime.toString();
+
     }
 
     public List<Object> getScheduleOfCode(String code){
