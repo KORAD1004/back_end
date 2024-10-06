@@ -2,6 +2,7 @@ package com.korad1004.back_end.category.entity;
 
 
 import com.korad1004.back_end.course.entity.CoursePlace;
+import com.korad1004.back_end.my_travel_plan.entity.TourList;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,4 +53,7 @@ public class Hotspot {
 
     @OneToMany(mappedBy = "hotspot",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<CoursePlace> coursePlaceList;
+
+    @OneToMany(mappedBy = "hotspot", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<TourList> tourLists;
 }
