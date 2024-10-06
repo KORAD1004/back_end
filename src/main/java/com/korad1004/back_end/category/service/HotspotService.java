@@ -60,7 +60,6 @@ public class HotspotService {
             while((arr=reader.readNext())!=null){
                 Hotspot hotspot = new Hotspot();
                 Optional<Category> optionalCategory=categoryRepository.findByCategoryName(arr[0]);
-
                     hotspot.setTitle(arr[1]);
                     hotspot.setImage(arr[2]);
                     hotspot.setAddress(arr[3]);
@@ -93,7 +92,6 @@ public class HotspotService {
             //해당 카테고리로 저장되어 있는 spot을 모두 불러옴
             Optional<List<Hotspot>> optionalHotspots=hotspotRepository.findAllByCategory(optionalCategory.get());
 
-
             if(optionalHotspots.isPresent()){
 
                 List<Hotspot> hotspotList=optionalHotspots.get();
@@ -102,10 +100,8 @@ public class HotspotService {
                     hotspotInfoDto = HotspotInfoDto.from(hotspot);
                     hotspotInfoDtoList.add(hotspotInfoDto);
                 }
-
                 return hotspotInfoDtoList;
             }
-
         }
 
         return null;
@@ -119,16 +115,13 @@ public class HotspotService {
 
         for(Hotspot hotspot:hotspotList){
             GetAllHotspotInfo getAllHotspotInfo = new GetAllHotspotInfo();
-
             getAllHotspotInfo.setId(hotspot.getId());
             getAllHotspotInfo.setTitle(hotspot.getTitle());
             getAllHotspotInfo.setAddress(hotspot.getAddress());
-
             getAllHotspotInfoList.add(getAllHotspotInfo);
         }
 
         return getAllHotspotInfoList;
-
     }
 
     //나의 일정 짜기 검색시 해당 hotspot get
