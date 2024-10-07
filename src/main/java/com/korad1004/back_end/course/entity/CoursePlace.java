@@ -39,6 +39,9 @@ public class CoursePlace {
     @Column
     private String longitude;
 
+    @Column
+    private String spotURL;
+
     @ManyToOne
     @JoinColumn(name = "course_course_id")
     private Course course;

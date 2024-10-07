@@ -67,6 +67,7 @@ public class HotspotService {
                     hotspot.setLatitude(arr[5]);
                     hotspot.setLongitude(arr[6]);
                     hotspot.setSubTitle(arr[7]);
+                    hotspot.setSpotURL(arr[8]);
                     optionalCategory.ifPresent(hotspot::setCategory);
                     hotspotRepository.save(hotspot);
             }
