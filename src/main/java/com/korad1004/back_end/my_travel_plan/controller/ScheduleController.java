@@ -35,7 +35,7 @@ public class ScheduleController {
     @GetMapping("/{travel_code}")
     public ResponseEntity<List<Object>> getScheduleOfCode(@PathVariable(name="travel_code") String code){
 
-        return ResponseEntity.ok(scheduleService.getScheduleOfCode(code));
+        return ResponseEntity.ok(scheduleService.getScheduleOfCode("#"+code));
     }
 
 }
