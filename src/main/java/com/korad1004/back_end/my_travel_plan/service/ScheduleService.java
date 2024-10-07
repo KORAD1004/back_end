@@ -13,8 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
@@ -42,7 +40,7 @@ public class ScheduleService {
         while(true){
                 SecretKey secretKey = KeyGenerator.getInstance(localDateTimeNumericEncryption.getALGORITHM()).generateKey();
                 LocalDateTime code = LocalDateTime.now();
-                numericEncryptedDateTime = new StringBuilder("#").append(localDateTimeNumericEncryption.encryptToSixDigits(code, secretKey));
+                numericEncryptedDateTime = new StringBuilder(localDateTimeNumericEncryption.encryptToSixDigits(code, secretKey));
 
                 if(scheduleRepository.findByCode(String.valueOf(numericEncryptedDateTime)).isEmpty())
                     break;
@@ -79,7 +77,7 @@ public class ScheduleService {
             //메모 저장
             tourList.setMemo(tourListDto.getMemo());
 
-            //해당 스케줄 id 받아오기
+            //해당 스케줄 code 받아오기
             if(scheduleRepository.findByCode(schedule.getCode()).isPresent())
                 tourList.setSchedule(scheduleRepository.findByCode(schedule.getCode()).get());
 
@@ -90,35 +88,25 @@ public class ScheduleService {
 
     }
 
+    //해당 코드에 대한 스케줄 받아오기
     public List<Object> getScheduleOfCode(String code){
 
-        GetScheduleOfCode getScheduleOfCode = new GetScheduleOfCode();
+        GetScheduleOfCode getScheduleOfCode;
         Optional<Schedule> optionalSchedule= scheduleRepository.findByCode(code);
         Schedule schedule;
+        GetSpotInfoOfMyTravel getSpotInfoOfMyTravel;
         List<GetSpotInfoOfMyTravel> getSpotInfoOfMyTravelList = new ArrayList<>();
         List<Object> objectList = new ArrayList<>();
         if(optionalSchedule.isPresent()){
             schedule = optionalSchedule.get();
-            getScheduleOfCode.setCode(schedule.getCode());
-            getScheduleOfCode.setTravelName(schedule.getTravelName());
-            getScheduleOfCode.setHeadCount(schedule.getHeadCount());
-            getScheduleOfCode.setStartDate(schedule.getStartDate());
-            getScheduleOfCode.setEndDate(schedule.getEndDate());
-            getScheduleOfCode.setDays(schedule.getDays());
+
+            getScheduleOfCode=GetScheduleOfCode.from(schedule);
 
             objectList.add(getScheduleOfCode);
 
             for(TourList tourList:schedule.getTourLists()){
 
-                GetSpotInfoOfMyTravel getSpotInfoOfMyTravel = new GetSpotInfoOfMyTravel();
-
-                getSpotInfoOfMyTravel.setNumber(tourList.getNumber());
-                getSpotInfoOfMyTravel.setMemo(tourList.getMemo());
-                getSpotInfoOfMyTravel.setImage(tourList.getHotspot().getImage());
-                getSpotInfoOfMyTravel.setTitle(tourList.getHotspot().getTitle());
-                getSpotInfoOfMyTravel.setAddress(tourList.getHotspot().getAddress());
-                getSpotInfoOfMyTravel.setLatitude(tourList.getHotspot().getLatitude());
-                getSpotInfoOfMyTravel.setLongitude(tourList.getHotspot().getLongitude());
+                getSpotInfoOfMyTravel=GetSpotInfoOfMyTravel.from(tourList);
 
                 getSpotInfoOfMyTravelList.add(getSpotInfoOfMyTravel);
             }

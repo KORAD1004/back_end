@@ -58,21 +58,18 @@ public class CoursePlaceService {
             //
             List<CoursePlace> coursePlaceList = coursePlaceRepository.findByCourse(optionalCourse.get());
 
+            CourseInfoDto courseInfoDto;
             for(CoursePlace coursePlace:coursePlaceList) {
 
-                CourseInfoDto courseInfoDto=new CourseInfoDto();
                 Optional<Hotspot> optionalHotspot= hotspotRepository.findById(coursePlace.getHotspot().getId());
 
                 if(optionalHotspot.isPresent()) {
                     Hotspot hotspot=optionalHotspot.get();
 
+                    courseInfoDto=CourseInfoDto.from(hotspot);
+
                     courseInfoDto.setNumber(coursePlace.getNumber());
-                    courseInfoDto.setTitle(hotspot.getTitle());
-                    courseInfoDto.setAddress(hotspot.getAddress());
-                    courseInfoDto.setImage(hotspot.getImage());
-                    courseInfoDto.setLatitude(hotspot.getLatitude());
-                    courseInfoDto.setLongitude(hotspot.getLongitude());
-                    courseInfoDto.setCategory(hotspot.getCategory().getCategoryName());
+
                     courseInfoDtoList.add(courseInfoDto);
                 }
             }

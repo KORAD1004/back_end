@@ -42,9 +42,12 @@ public class Hotspot {
     @Column
     private String longitude;
 
-    //장소 URL (도메인 주소)
     @Column
     private String subTitle;
+
+    //장소 URL (도메인 주소)
+    @Column
+    private String spotURL;
 
     //카테고리 별 장소 지정
     @ManyToOne
