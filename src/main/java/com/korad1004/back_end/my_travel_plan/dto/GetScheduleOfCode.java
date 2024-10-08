@@ -4,8 +4,7 @@ package com.korad1004.back_end.my_travel_plan.dto;
 import com.korad1004.back_end.my_travel_plan.entity.Schedule;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -17,13 +16,11 @@ public class GetScheduleOfCode {
 
     private Integer headCount;
 
-    private String startDate;
+    private LocalDate startDate;
 
-    private String endDate;
+    private LocalDate endDate;
 
     private String days;
-
-    //number,[hotspot_image,hotspot_title,hotspot_address,hotspot_latitude,hotspot_longitude],memo
 
     public static GetScheduleOfCode from(Schedule schedule){
 

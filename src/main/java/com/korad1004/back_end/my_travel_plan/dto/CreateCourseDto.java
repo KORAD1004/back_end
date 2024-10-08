@@ -2,6 +2,7 @@ package com.korad1004.back_end.my_travel_plan.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -14,9 +15,9 @@ public class CreateCourseDto {
 
     private Integer headCount;
 
-    private String startDate;
+    private LocalDate startDate;
 
-    private String endDate;
+    private LocalDate endDate;
 
     private String days;
 

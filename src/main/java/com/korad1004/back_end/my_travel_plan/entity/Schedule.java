@@ -3,6 +3,7 @@ package com.korad1004.back_end.my_travel_plan.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -23,11 +24,11 @@ public class Schedule {
 
     //시작날짜
     @Column(name = "start_date")
-    private String startDate;
+    private LocalDate startDate;
 
     //종료날짜
     @Column(name = "end_date")
-    private String endDate;
+    private LocalDate endDate;
 
     //일차
     @Column(name = "travel_days")

@@ -54,11 +54,24 @@ public class ScheduleService {
         //인원수
         schedule.setHeadCount(createCourseDto.getHeadCount());
 
-        //시작날짜
-        schedule.setStartDate(createCourseDto.getStartDate());
 
-        //종료 날짜
-        schedule.setEndDate(createCourseDto.getEndDate());
+        //시작날짜가 종료날짜보다 작다 -> true 반환
+        if(createCourseDto.getStartDate().isBefore(createCourseDto.getEndDate())){
+            //시작날짜
+            schedule.setStartDate(createCourseDto.getStartDate());
+
+            //종료 날짜
+            schedule.setEndDate(createCourseDto.getEndDate());
+        }
+        else if(createCourseDto.getStartDate().isEqual(createCourseDto.getEndDate())){
+            //시작날짜
+            schedule.setStartDate(createCourseDto.getStartDate());
+
+            //종료 날짜
+            schedule.setEndDate(createCourseDto.getEndDate());
+        }
+        else throw new RuntimeException("시간 잘못 입력 하셨습니다.");
+
 
         //일수
         schedule.setDays(createCourseDto.getDays());

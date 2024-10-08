@@ -2,6 +2,7 @@ package com.korad1004.back_end.my_travel_plan.controller;
 
 import com.korad1004.back_end.my_travel_plan.dto.CreateCourseDto;
 import com.korad1004.back_end.my_travel_plan.service.ScheduleService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,13 +24,14 @@ public class ScheduleController {
 
     //스케줄 만들기
     @PostMapping
-    public ResponseEntity<String> createSchedule(@RequestBody CreateCourseDto createCourseDto) throws Exception{
+    public ResponseEntity<?> createSchedule(@RequestBody CreateCourseDto createCourseDto) throws Exception{
         try{
-        return ResponseEntity.ok(scheduleService.createSchedule(createCourseDto));
-        } catch (Exception e) {
-            throw new RuntimeException("암호 화가 안 됐어요 you know?",e);
+            scheduleService.createSchedule(createCourseDto);
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
 
+        return ResponseEntity.created(URI.create("/api/schedule")).build();
     }
 
     @GetMapping("/{travel_code}")
