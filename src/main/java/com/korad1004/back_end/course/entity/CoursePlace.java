@@ -24,24 +24,6 @@ public class CoursePlace {
     @Column(name="courseplace_number")
     private Integer number;
 
-    @Column
-    private String image;
-
-    @Column
-    private String title;
-
-    @Column
-    private String address;
-
-    @Column
-    private String latitude;
-
-    @Column
-    private String longitude;
-
-    @Column
-    private String spotURL;
-
     @ManyToOne
     @JoinColumn(name = "course_course_id")
     private Course course;
