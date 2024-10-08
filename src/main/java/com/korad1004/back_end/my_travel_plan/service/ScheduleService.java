@@ -13,12 +13,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -34,6 +34,7 @@ public class ScheduleService {
 
 
     //스케줄 만들기
+    @Transactional
     public String createSchedule(CreateCourseDto createCourseDto) throws Exception {
         Schedule schedule = new Schedule();
         StringBuilder numericEncryptedDateTime;
@@ -70,7 +71,7 @@ public class ScheduleService {
             //종료 날짜
             schedule.setEndDate(createCourseDto.getEndDate());
         }
-        else throw new RuntimeException("시간 잘못 입력 하셨습니다.");
+        else throw new Exception("시간 잘못 입력 하셨습니다.");
 
 
         //일수
@@ -129,4 +130,23 @@ public class ScheduleService {
 
         return objectList;
     }
+
+    @Transactional
+    public void deleteScheduleOfCode(String code) throws RuntimeException{
+        if(scheduleRepository.findById(code).isPresent())
+            scheduleRepository.deleteById(code);
+        else
+            throw new RuntimeException("Don't exist Schedule of code");
+    }
+
+//    @Transactional
+//    public void updateScheduleOfCode(String code, CreateCourseDto createCourseDto){
+//
+//        if(scheduleRepository.findById(code).isPresent()){
+//
+//
+//
+//        }
+//
+//    }
 }
