@@ -26,12 +26,10 @@ public class ScheduleController {
     @PostMapping
     public ResponseEntity<?> createSchedule(@RequestBody CreateCourseDto createCourseDto) throws Exception{
         try{
-            scheduleService.createSchedule(createCourseDto);
+            return ResponseEntity.ok(scheduleService.createSchedule(createCourseDto));
         }catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-
-        return ResponseEntity.created(URI.create("/api/schedule")).build();
     }
 
     @GetMapping("/{travel_code}")
