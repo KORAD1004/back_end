@@ -106,11 +106,17 @@ public class ScheduleService {
     public List<Object> getScheduleOfCode(String code){
 
         GetScheduleOfCode getScheduleOfCode;
+
         Optional<Schedule> optionalSchedule= scheduleRepository.findByCode(code);
-        Schedule schedule;
+
+        Schedule schedule;  //스케줄 객체 생성
+
         GetSpotInfoOfMyTravel getSpotInfoOfMyTravel;
+
         List<GetSpotInfoOfMyTravel> getSpotInfoOfMyTravelList = new ArrayList<>();
+
         List<Object> objectList = new ArrayList<>();
+
         if(optionalSchedule.isPresent()){
             schedule = optionalSchedule.get();
 
@@ -131,22 +137,50 @@ public class ScheduleService {
         return objectList;
     }
 
+    //해당 코드에 대한 삭제
     @Transactional
     public void deleteScheduleOfCode(String code) throws RuntimeException{
         if(scheduleRepository.findById(code).isPresent())
             scheduleRepository.deleteById(code);
         else
-            throw new RuntimeException("Don't exist Schedule of code");
+            throw new RuntimeException("There is no schedule for the code");
     }
 
-//    @Transactional
-//    public void updateScheduleOfCode(String code, CreateCourseDto createCourseDto){
-//
-//        if(scheduleRepository.findById(code).isPresent()){
-//
-//
-//
-//        }
-//
-//    }
+    @Transactional
+    public void updateScheduleOfCode(String code, CreateCourseDto createCourseDto) throws RuntimeException{
+
+        if(scheduleRepository.findById(code).isPresent()){
+
+            Schedule schedule = scheduleRepository.findById(code).get();
+            schedule.setTravelName(createCourseDto.getTravelName());
+            schedule.setHeadCount(createCourseDto.getHeadCount());
+            //한쪽이 시간이 큰 경우만 나중에 수정 해야될 부분
+            if(createCourseDto.getStartDate().isAfter(createCourseDto.getEndDate())){
+                throw new RuntimeException("요청 형식이 알맞지 않음");
+            }
+            else{
+                schedule.setStartDate(createCourseDto.getStartDate());
+                schedule.setEndDate(createCourseDto.getEndDate());
+            }
+            schedule.setDays(createCourseDto.getDays());
+
+            scheduleRepository.save(schedule);
+
+            tourListRepository.deleteAllByScheduleCode(code);
+            for(TourListDto tourListDto : createCourseDto.getTourListDtoList()) {
+
+                    TourList tourList = new TourList();
+
+                    tourList.setNumber(tourListDto.getNumber());
+                    if (hotspotRepository.findById(tourListDto.getHotspot()).isPresent()) //핫스팟이 일단 존재하는지 여부
+                        tourList.setHotspot(hotspotRepository.findById(tourListDto.getHotspot()).get());
+                    else return;
+                    tourList.setMemo(tourListDto.getMemo());
+                    tourList.setSchedule(schedule);
+                    tourListRepository.save(tourList);
+            }
+        }
+        else throw new RuntimeException("There is no schedule for code #"+code);
+
+    }
 }
