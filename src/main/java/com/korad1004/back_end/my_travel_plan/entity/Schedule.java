@@ -34,6 +34,7 @@ public class Schedule {
     @Column(name = "travel_days")
     private String days;
 
+    //여러개의 투어 항목이 들어감
     @OneToMany(mappedBy = "schedule",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<TourList> tourLists;
 
