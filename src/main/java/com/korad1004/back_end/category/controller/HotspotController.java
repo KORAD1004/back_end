@@ -75,7 +75,7 @@ public class HotspotController {
                     responseCode = "200",
                     description = "특정 카테고리에 대한 장소 리스트업 성공",
                     content = @Content(
-                            mediaType = "application.json",
+                            mediaType = "application/json",
                             schema = @Schema(type = "array",implementation = HotspotInfoDto.class)
                     )
             )
@@ -102,7 +102,7 @@ public class HotspotController {
                     responseCode = "200",
                     description = "모든 저장된 장소를 잘 불러옴",
                     content = @Content(
-                            mediaType = "application.json",
+                            mediaType = "application/json",
                             schema = @Schema(type = "array",implementation = GetAllHotspotInfo.class)
                     )
             )
@@ -145,7 +145,7 @@ public class HotspotController {
                     responseCode = "200",
                     description = "특정 글자에 대한 장소들 보여 주기 성공",
                     content = @Content(
-                            mediaType = "application.json",
+                            mediaType = "application/json",
                             schema = @Schema(type = "array",implementation = GetAllSpotOfString.class)
                     )
             )
