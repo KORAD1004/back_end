@@ -115,10 +115,7 @@ public class HotspotService {
         List<GetAllHotspotInfo> getAllHotspotInfoList = new ArrayList<>();
 
         for(Hotspot hotspot:hotspotList){
-            GetAllHotspotInfo getAllHotspotInfo = new GetAllHotspotInfo();
-            getAllHotspotInfo.setId(hotspot.getId());
-            getAllHotspotInfo.setTitle(hotspot.getTitle());
-            getAllHotspotInfo.setAddress(hotspot.getAddress());
+            GetAllHotspotInfo getAllHotspotInfo=GetAllHotspotInfo.from(hotspot);
             getAllHotspotInfoList.add(getAllHotspotInfo);
         }
 
