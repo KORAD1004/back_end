@@ -4,12 +4,14 @@ package com.korad1004.back_end.category.controller;
 import com.korad1004.back_end.category.dto.GetAllHotspotInfo;
 import com.korad1004.back_end.category.dto.GetAllSpotOfString;
 import com.korad1004.back_end.category.dto.HotspotInfoDto;
+import com.korad1004.back_end.category.entity.Hotspot;
 import com.korad1004.back_end.category.service.HotspotService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/hotspot")
+@Tag(name = "hotspot",description = "가볼만한 곳" + " + 나의 여행 일정 짜기 API")
 public class HotspotController {
 
     private final HotspotService hotspotService;
@@ -88,9 +91,22 @@ public class HotspotController {
         return ResponseEntity.notFound().build();
     }
 
-    //무한 GET요청 모든 HOTSPOT 넘겨주기
     @GetMapping
-
+    @Operation(
+            summary = "<가볼만 한 곳> 카테고리 구분 없이 저장 되어있는 모든 장소 리스트 업",
+            description = " Try it out -> execute" +
+                    "데이베이스에 저장되어 있는 모든 장소를 받을 수 있다."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "모든 저장된 장소를 잘 불러옴",
+                    content = @Content(
+                            mediaType = "application.json",
+                            schema = @Schema(type = "array",implementation = GetAllHotspotInfo.class)
+                    )
+            )
+    })
     public ResponseEntity<List<GetAllHotspotInfo>> getAllHotspot(){
 
         return ResponseEntity.ok(hotspotService.getAllHotspot());
@@ -98,6 +114,17 @@ public class HotspotController {
     }
 
     //CSV 데이터 넣기
+    @Operation(
+            summary = "<가볼만 한 곳> CSV에 저장된 데이터 주입",
+            description = " Try it out -> execute" +
+                    "CSV에 저장된 데이터를 각 카테고리 별로 알아서 저장됨."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "모든 장소 저장 완료"
+            )
+    })
     @PostMapping("/all-place-insert")
     public ResponseEntity<Void> createHotspotCategory() {
         hotspotService.createHotspots();
@@ -106,6 +133,7 @@ public class HotspotController {
     }
 
 
+    //무한 GET요청 모든 HOTSPOT 넘겨주기
     @GetMapping(value = {"/search/", "/search/{string}"})
     @Operation(
             summary = "<나의 여행 일정 짜기> 장소 검색",
