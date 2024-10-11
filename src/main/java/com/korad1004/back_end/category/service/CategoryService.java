@@ -23,12 +23,12 @@ public class CategoryService {
 
 
     @Transactional  //카테고리 메인 이름 생성
-    public Category createCategory(CategoryNameDto categoryNameDto){
+    public void createCategory(CategoryNameDto categoryNameDto){
         Category category =new Category();
 
         category.setCategoryName(categoryNameDto.getCategoryName());
 
-        return categoryRepository.save(category);
+        categoryRepository.save(category);
     }
 
 }
