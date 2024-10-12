@@ -1,9 +1,11 @@
 package com.korad1004.back_end.course.service;
 
 import com.korad1004.back_end.course.dto.CourseNameDto;
+import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import com.korad1004.back_end.course.entity.Course;
 import com.korad1004.back_end.course.repository.CourseRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,8 +54,12 @@ public class CourseService {
 
     //코스 삭제
     @Transactional
-    public ResponseEntity<Void> deleteCourse(Long integer){
-        courseRepository.deleteById(integer);
-        return null;
+    public ResponseEntity<?> deleteCourse(Long integer){
+            if(courseRepository.findById(integer).isPresent()){
+                courseRepository.deleteById(integer);
+                return ResponseEntity.noContent().build();
+            }
+            else
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 테마 Id를 찾을 수 없습니다.");
     }
 }
