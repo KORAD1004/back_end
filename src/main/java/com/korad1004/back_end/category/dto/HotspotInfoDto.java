@@ -25,6 +25,9 @@ public class HotspotInfoDto {
     @Schema(description = "장소 소개",example = "경치가 아름다운 곳")
     private String subTitle;
 
+    @Schema(description = "장소 페이지",example = "http://www.address.com")
+    private String spotURL;
+
     public static HotspotInfoDto from(Hotspot hotspot){
         HotspotInfoDto hotspotInfoDto = new HotspotInfoDto();
         hotspotInfoDto.setTitle(hotspot.getTitle());
@@ -32,6 +35,7 @@ public class HotspotInfoDto {
         hotspotInfoDto.setImage(hotspot.getImage());
         hotspotInfoDto.setPhone_num(hotspot.getPhone_num());
         hotspotInfoDto.setSubTitle(hotspot.getSubTitle());
+        hotspotInfoDto.setSpotURL(hotspot.getSpotURL());
 
         return hotspotInfoDto;
     }
