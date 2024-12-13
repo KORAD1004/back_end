@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main  # main 브랜치에 push될 때
-      - develop  # develop 브랜치에 push될 때
+      # - develop  # develop 브랜치에 push될 때
 
 permissions: write-all # 테스트 결과 작성을 위해 쓰기권한 추가
 
@@ -72,15 +72,15 @@ jobs:
             cd /home/ubuntu/nuclear_server || exit 1  # 경로 변경 실패 시 종료
               sudo docker compose --profile prod --env-file .env.prod down
               sudo docker compose --profile prod --env-file .env.prod up --build -d
-      - name: Deploy using Docker Compose via SSH(Dev)
-        if: github.ref == 'refs/heads/develop'
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ubuntu
-          key: ${{ secrets.SSH_KEY }}
-          script_stop: true
-          script: |
-            cd /home/ubuntu/nuclear_server || exit 1  # 경로 변경 실패 시 종료
-              sudo docker compose --profile dev --env-file .env.dev down
-              sudo docker compose --profile dev --env-file .env.dev up --build -d
+      # - name: Deploy using Docker Compose via SSH(Dev)
+      #   if: github.ref == 'refs/heads/develop'
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ubuntu
+      #     key: ${{ secrets.SSH_KEY }}
+      #     script_stop: true
+      #     script: |
+      #       cd /home/ubuntu/nuclear_server || exit 1  # 경로 변경 실패 시 종료
+      #         sudo docker compose --profile dev --env-file .env.dev down
+      #         sudo docker compose --profile dev --env-file .env.dev up --build -d
