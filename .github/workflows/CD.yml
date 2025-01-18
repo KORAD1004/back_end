@@ -70,7 +70,7 @@ jobs:
           script_stop: true
           script: |
             cd /home/ubuntu/nuclear_server || exit 1  # 경로 변경 실패 시 종료
-              sudo docker compose --profile prod --env-file .env.prod down
+              sudo docker compose --profile prod --env-file .env.prod down --remove-orphans
               sudo docker compose --profile prod --env-file .env.prod up --build -d
       # - name: Deploy using Docker Compose via SSH(Dev)
       #   if: github.ref == 'refs/heads/develop'
